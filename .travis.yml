@@ -1,0 +1,7 @@
+language: java
+
+before_script:
+  - ./gradlew compileTestKotlinJs
+
+after_success:
+  - ./gradlew bintrayUpload
