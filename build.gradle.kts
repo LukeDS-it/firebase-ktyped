@@ -67,7 +67,7 @@ data class Version(val major: Int, val minor: Int, val patch: Int, val snapshot:
                 e.printStackTrace()
                 null
             }
-            "-" + (branch?.name ?: "alpha") + "-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
+            "-" + (branch?.trackingBranch?.name?.drop("origin/".length) ?: "alpha") + "-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
         }
         else ""
 
