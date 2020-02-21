@@ -48,7 +48,7 @@ tasks {
         key = System.getenv("BINTRAY_PASS")
         pkg(delegateClosureOf<BintrayExtension.PackageConfig> {
             repo = "maven"
-            name = project.name
+            name = if (cVersion.snapshot) project.name else "${project.name}-branches"
             setLicenses("MIT")
             vcsUrl = "https://github.com/LukeDS-it/firebase-ktyped"
             publish = true
