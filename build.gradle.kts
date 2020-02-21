@@ -7,8 +7,8 @@ import java.time.format.DateTimeFormatter
 plugins {
     id("maven-publish")
     id("com.jfrog.bintray") version "1.8.4"
+    id("org.ajoberstar.grgit") version "4.0.1"
     id("org.jetbrains.kotlin.js") version "1.3.61"
-    id("org.ajoberstar.git-publish") version "2.1.3"
     id("com.github.node-gradle.node") version "2.2.1"
 }
 
@@ -62,11 +62,12 @@ data class Version(val major: Int, val minor: Int, val patch: Int, val snapshot:
     override fun toString(): String {
         val suffix = if (snapshot) {
             val branch = try {
-                BranchService(Grgit.open().repository).current()
+                BranchService(Grgit.open(mapOf("currentDir" to project.rootDir)).repository).current()
             } catch (e: Exception) {
+                e.printStackTrace()
                 null
             }
-            "-" + (branch?.name ?: "alpha-") + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
+            "-" + (branch?.name ?: "alpha") + "-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
         }
         else ""
 
