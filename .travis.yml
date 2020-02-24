@@ -6,4 +6,5 @@ before_script:
   - ./gradlew compileTestKotlinJs
 
 after_success:
-  - ./gradlew bintrayUpload
+  - test $TRAVIS_BRANCH != "master" && ./gradlew bintrayUpload
+  - test $TRAVIS_BRANCH == "master" && ./gradlew release -Prelease.useAutomaticVersion=true
